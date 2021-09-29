@@ -9,7 +9,7 @@ def test_course(client, student_factory, course_factory):
     student_factory(_quantity=1)
     course_factory(_quantity=1)
     cor = Course.objects.first()
-    url = reverse('courses-detail', args=(str(cor.id)))
+    url = reverse('courses-detail', args=(cor.id,))
     response = client.get(url)
     assert response.status_code == 200
     assert response.data['id'] == cor.id
@@ -35,15 +35,15 @@ def test_course_id(client, course_factory):
 def test_course_delete(client, course_factory):
     course_factory(_quantity=1)
     cor = Course.objects.first()
-    url = reverse('courses-detail', args=(str(cor.id)))
-    response = client.delete(url, data={'id': f'{str(cor.id)}'})
+    url = reverse('courses-detail', args=(cor.id,))
+    response = client.delete(url, data={'id': f'{cor.id}'})
     assert response.status_code == 204
 
 @pytest.mark.django_db
 def test_course_patch(client, course_factory):
     course_factory(_quantity=1)
     cor = Course.objects.first()
-    url = reverse('courses-detail', args=(str(cor.id)))
+    url = reverse('courses-detail', args=(cor.id,))
     response = client.patch(url, data={'name': '777'})
     assert response.status_code == 200
 
